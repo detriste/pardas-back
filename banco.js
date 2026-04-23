@@ -4,15 +4,17 @@ const db = mysql.createPool({
     host: "localhost",
     user: "root",
     password: "root",
-    database: "tcc",
+    database: "pardas",
     port: 3306, 
   });
   
   (async () => {
     try {
       await db.getConnection();
-      console.log("✅ Conectado ao MySQL");
+      console.log("Conectado ao MySQL");
     } catch (err) {
-      console.error("❌ Erro ao conectar ao MySQL:", err);
+      console.error(" Erro ao conectar ao MySQL:", err);
     }
   })();
+
+module.exports = db;

@@ -1,8 +1,10 @@
-const express = require('express'); // tem que importar esses treco
+const express = require('express');
 const router = express.Router();
-const proController = require('../controllers/proControllers'); // nome da função e oque ela faz 
+const proController = require('../controllers/proControllers');
 
-
-router.post('/produtos', proController.cadastrarProduto); // post para criar produto ;; ela puxa aqui
+router.get('/produtos', proController.listarProdutos);
+router.post('/produtos', proController.cadastrarProduto);
+router.put('/produtos/:id', proController.editarProduto);
+router.delete('/produtos/:id', proController.excluirProduto);
 
 module.exports = router;
