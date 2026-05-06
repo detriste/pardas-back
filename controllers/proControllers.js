@@ -16,16 +16,11 @@ exports.cadastrarProduto = async (req, res) => {
     if (!nomepro || !desc || !preco || !quantidade || !quantidade_minima)
       return res.status(400).json({ erro: 'Preencha todos os campos' });
 
-    const [movResult] = await db.query(
-      'INSERT INTO movimentações (tipo, quantidade) VALUES (?, ?)',
-      ['Entrada', quantidade]
-    );
-
     await db.query(
-      'INSERT INTO produtos (nomepro, `desc`, preco, quantidade, quantidade_minima, movimentações_id) VALUES (?, ?, ?, ?, ?, ?)',
-      [nomepro, desc, preco, quantidade, quantidade_minima, movResult.insertId]
+      'INSERT INTO produtos (nomepro, `desc`, preco, quantidade, quantidade_minima) VALUES (?, ?, ?, ?, ?)',
+      [nomepro, desc, preco, quantidade, quantidade_minima]
     );
-
+    
     return res.status(201).json({ mensagem: 'Produto cadastrado com sucesso' });
   } catch (error) {
     console.error(error);
