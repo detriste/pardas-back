@@ -4,12 +4,14 @@ const app = express();
 
 const usuarioRotas = require('./rotas/usuarioRota');
 const proRotas = require('./rotas/proRotas');
+const movRotas = require('./rotas/Movrotas');
 
 app.use(cors());
 app.use(express.json());
 
 app.use(usuarioRotas);
 app.use(proRotas);
+app.use(movRotas);
 
 app.listen(3000, () => {
   console.log('Servidor rodando na porta 3000');
