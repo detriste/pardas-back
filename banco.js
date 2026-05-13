@@ -5,7 +5,7 @@ const db = mysql.createPool({
     user: "root",
     password: "root",
     database: "pardas",
-    port: 3307, 
+    port: 3306, 
   });
   
   (async () => {

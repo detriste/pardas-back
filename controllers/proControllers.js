@@ -51,16 +51,11 @@ exports.excluirProduto = async (req, res) => {
   try {
     const { id } = req.params;
 
-    // Busca o movimentações_id antes de deletar o produto
-    const [rows] = await db.query('SELECT movimentações_id FROM produtos WHERE id = ?', [id]);
+    const [rows] = await db.query('SELECT id FROM produtos WHERE id = ?', [id]);
     if (rows.length === 0)
       return res.status(404).json({ erro: 'Produto não encontrado' });
 
-    const movId = rows[0]['movimentações_id'];
-
-    // Deleta o produto primeiro (FK) e depois a movimentação
     await db.query('DELETE FROM produtos WHERE id = ?', [id]);
-    await db.query('DELETE FROM movimentações WHERE id = ?', [movId]);
 
     return res.status(200).json({ mensagem: 'Produto excluído com sucesso' });
   } catch (error) {
