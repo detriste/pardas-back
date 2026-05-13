@@ -2,7 +2,7 @@ const db = require('../banco');
 
 exports.listarProdutos = async (req, res) => {
   try {
-    const [rows] = await db.query('SELECT * FROM produtos ORDER BY nomepro ASC');
+    const [rows] = await db.query('SELECT * FROM produtos ORDER BY id ASC');
     return res.status(200).json(rows);
   } catch (error) {
     console.error(error);
