@@ -17,9 +17,9 @@ exports.listarMovimentacoes = async (req, res) => {
 
 exports.registrarMovimentacao = async (req, res) => {
   try {
-    const { produto_id, tipo, quantidade } = req.body;
+    const { produto_id, tipo, quantidade, data_hora } = req.body;
 
-    if (!produto_id || !tipo || !quantidade)
+    if (!produto_id || !tipo || !quantidade || !data_hora)
       return res.status(400).json({ erro: 'Preencha todos os campos' });
 
     if (tipo !== 'Entrada' && tipo !== 'Saida')
@@ -38,13 +38,11 @@ exports.registrarMovimentacao = async (req, res) => {
     if (tipo === 'Saida' && produto.quantidade < qtd)
       return res.status(400).json({ erro: `Estoque insuficiente. Disponível: ${produto.quantidade}` });
 
-    // Insere a movimentação com produto_id
     await db.query(
-      'INSERT INTO movimentações (produto_id, tipo, quantidade, data_hora) VALUES (?, ?, ?, NOW())',
-      [produto_id, tipo, qtd]
+      'INSERT INTO movimentações (produto_id, tipo, quantidade, data_hora) VALUES (?, ?, ?, ?)',
+      [produto_id, tipo, qtd, data_hora]
     );
 
-    // Atualiza o estoque do produto
     const novaQtd = tipo === 'Entrada'
       ? produto.quantidade + qtd
       : produto.quantidade - qtd;
