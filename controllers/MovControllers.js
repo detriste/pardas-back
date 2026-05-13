@@ -6,7 +6,7 @@ exports.listarMovimentacoes = async (req, res) => {
       SELECT m.id, m.tipo, m.quantidade, m.data_hora AS data, p.nomepro AS produto
       FROM movimentações m
       JOIN produtos p ON p.id = m.produto_id
-      ORDER BY m.id DESC
+      ORDER BY m.data_hora DESC
     `);
     return res.status(200).json(rows);
   } catch (error) {
